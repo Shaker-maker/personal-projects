@@ -9,6 +9,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
     <title>Gold & Gloss — Luxury Nail Salon Nairobi</title>
+    <link rel="icon" type="image/png" href="assets/logo-gg.png">
+    <link rel="apple-touch-icon" href="assets/logo-gg.png">
     <!-- Google Fonts with font-display: swap -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -124,6 +126,9 @@
         }
 
         .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
             font-family: var(--font-serif);
             font-size: 1.3rem;
             font-weight: 700;
@@ -132,6 +137,19 @@
             text-transform: uppercase;
             text-shadow: 0 0 18px var(--gold-glow);
             line-height: 1.2;
+        }
+
+        .logo-mark {
+            width: 38px;
+            height: 38px;
+            flex-shrink: 0;
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px var(--gold-glow));
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
         }
 
         .logo span {
@@ -148,6 +166,56 @@
             font-family: var(--font-sans);
             text-transform: uppercase;
             margin-top: -2px;
+        }
+
+        /* ── Loading Screen ── */
+        .loading-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 18px;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .loading-mark {
+            width: 84px;
+            height: 84px;
+            object-fit: contain;
+            animation: loadingPulse 1.6s ease-in-out infinite;
+            filter: drop-shadow(0 0 22px var(--gold-glow));
+        }
+
+        .loading-text {
+            font-family: var(--font-sans);
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        @keyframes loadingPulse {
+
+            0%,
+            100% {
+                opacity: 0.55;
+                transform: scale(0.96);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.04);
+            }
         }
 
         .nav-links {
@@ -1652,12 +1720,21 @@
 
 <body>
 
+    <!-- ═══ LOADING SCREEN ═══ -->
+    <div class="loading-screen" id="loadingScreen">
+        <img src="assets/logo-gg.png" alt="Gold & Gloss" class="loading-mark">
+        <span class="loading-text">Loading...</span>
+    </div>
+
     <!-- ═══ HEADER ═══ -->
     <header class="header" id="header">
         <div class="container header-inner">
             <div class="logo">
-                Gold<span>&amp;Gloss</span>
-                <small>Nail Atelier · Nairobi</small>
+                <img src="assets/logo-gg.png" alt="Gold & Gloss monogram" class="logo-mark">
+                <div class="logo-text">
+                    Gold<span>&amp;Gloss</span>
+                    <small>Nail Atelier · Nairobi</small>
+                </div>
             </div>
             <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
                 <span></span><span></span><span></span>
@@ -2202,7 +2279,11 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="brand">
+                    <img src="assets/logo-gg.png" alt="Gold & Gloss monogram"
+                        style="width:46px;height:46px;object-fit:contain;margin-bottom:10px;filter:drop-shadow(0 0 10px var(--gold-glow));">
                     <h4>Gold<span style="color:var(--text-light);font-weight:300;">&amp;Gloss</span></h4>
+                    <p style="margin-top:2px;font-size:0.75rem;letter-spacing:1px;color:var(--text-muted);text-transform:uppercase;">
+                        Luxury Nail Atelier</p>
                     <p>Nairobi's premier nail atelier, where luxury meets artistry. We craft bespoke nail experiences
                         with premium products and passionate technicians.</p>
                 </div>
@@ -2250,6 +2331,12 @@
 
     <!-- ═══ JavaScript ═══ -->
     <script>
+        // ── Loading Screen ──
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loadingScreen');
+            setTimeout(() => loader && loader.classList.add('hidden'), 400);
+        });
+
         // ── Hamburger ──
         const hamburger = document.getElementById('hamburger');
         const navLinks = document.getElementById('navLinks');
